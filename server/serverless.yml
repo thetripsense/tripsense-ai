@@ -1,0 +1,60 @@
+service: trip-sense
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-west-2
+  environment:
+    # Replace with your actual secrets / environment variables
+    OPENAI_API_KEY: <KEY>
+    JWT_SECRET: SADDAM-VIMAL-ASHISH
+    USERS_TABLE: MyUsersTable
+
+functions:
+  # ---------- Auth Functions ----------
+  register:
+    handler: src/handlers/authHandler.register
+    events:
+      - http:
+          path: register
+          method: post
+
+  login:
+    handler: src/handlers/authHandler.login
+    events:
+      - http:
+          path: login
+          method: post
+
+  health:
+    handler: src/handlers/authHandler.health
+    events:
+      - http:
+          path: health
+          method: get
+
+  # ---------- Chat Function ----------
+  chat:
+    handler: src/handlers/chatHandler.getChatResponse
+    events:
+      - http:
+          path: chat
+          method: post
+# Optional: Resources section to create DynamoDB table via CloudFormation
+# If you want to create a table automatically, uncomment and update accordingly
+# resources:
+#   Resources:
+#     MyUsersTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: MyUsersTable
+#         AttributeDefinitions:
+#           - AttributeName: email
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: email
+#             KeyType: HASH
+#         BillingMode: PAY_PER_REQUEST
+
+plugins:
+  - serverless-offline

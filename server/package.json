@@ -1,0 +1,22 @@
+{
+    "name": "trip-sense",
+    "version": "1.0.0",
+    "description": "A Node.js serverless project for AWS (registration, login, and ChatGPT).",
+    "main": "src/handlers/authHandler.js",
+    "scripts": {
+        "deploy": "serverless deploy",
+        "offline": "serverless offline"
+    },
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^1.5.0",
+        "bcryptjs": "^2.4.3",
+        "jsonwebtoken": "^9.0.0",
+        "aws-sdk": "^2.1363.0"
+    },
+    "devDependencies": {
+        "serverless": "^3.33.0",
+        "serverless-offline": "^12.0.4"
+    }
+}
