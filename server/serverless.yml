@@ -1,14 +1,21 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: tripsense
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: tripsense
 service: trip-sense
 
 provider:
   name: aws
   runtime: nodejs18.x
   region: us-west-2
+  timeout: 60
   environment:
-    # Replace with your actual secrets / environment variables
-    OPENAI_API_KEY: <KEY>
-    JWT_SECRET: SADDAM-VIMAL-ASHISH
-    USERS_TABLE: MyUsersTable
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    JWT_SECRET: ${env:JWT_SECRET}
+    USERS_TABLE: ${env:USERS_TABLE}
+  apiGateway:
+    role:
+      arn: arn:aws:iam::account-id:role/serverlessApiGatewayCloudWatchRole
 
 functions:
   # ---------- Auth Functions ----------
@@ -57,4 +64,5 @@ functions:
 #         BillingMode: PAY_PER_REQUEST
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline
